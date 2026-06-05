@@ -4,7 +4,14 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       crawlLinks: true,
-      routes: ['/'],
+      routes: [
+        '/',
+        '/projects/bisses-du-valais',
+        '/projects/dynamic-disk-covers',
+        '/projects/graumagazin-com',
+        '/projects/randomshit666-com',
+        '/projects/this-is-a-tentative-of-deconstruction-of-a-wordpress-website',
+      ],
     },
   },
 
