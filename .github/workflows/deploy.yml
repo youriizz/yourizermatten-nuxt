@@ -33,6 +33,15 @@ jobs:
           NUXT_APP_BASE_URL: /yourizermatten-nuxt/
           NUXT_PUBLIC_CONTENT_API_BASE_URL: /yourizermatten-nuxt/_content
 
+      - name: Debug — list output
+        run: |
+          echo "=== .output/public exists? ==="
+          ls -la .output/public || echo "MISSING"
+          echo "=== HTML files ==="
+          find .output/public -name "*.html" | sort || echo "none"
+          echo "=== Root index.html size ==="
+          wc -c .output/public/index.html || echo "no index.html"
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
