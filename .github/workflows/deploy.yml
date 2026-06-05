@@ -3,6 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -24,35 +25,16 @@ jobs:
           node-version: 22
           cache: npm
 
-      - name: Debug — env
-        run: |
-          echo "Node: $(node -v)"
-          echo "npm: $(npm -v)"
-          echo "pwd: $(pwd)"
-          ls -la
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+        with:
+          static_site_generator: nuxt
 
       - name: Install dependencies
-        run: npm install
-
-      - name: Debug — after install
-        run: |
-          echo "node_modules exists? $(ls node_modules | wc -l) packages"
-          echo "nuxt bin: $(./node_modules/.bin/nuxt --version 2>&1 || echo MISSING)"
+        run: npm ci
 
       - name: Build
         run: npm run build
-        env:
-          NUXT_APP_BASE_URL: /yourizermatten-nuxt/
-          NUXT_PUBLIC_CONTENT_API_BASE_URL: /yourizermatten-nuxt/_content
-
-      - name: Debug — list output
-        run: |
-          echo "=== .output/public exists? ==="
-          ls -la .output/public || echo "MISSING"
-          echo "=== HTML files ==="
-          find .output/public -name "*.html" | sort || echo "none"
-          echo "=== Root index.html size ==="
-          wc -c .output/public/index.html || echo "no index.html"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
