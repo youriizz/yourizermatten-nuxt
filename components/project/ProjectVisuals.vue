@@ -15,7 +15,7 @@
         v-else-if="current?.type === 'image'"
         :key="current.src"
         class="pv-media"
-        :src="current.src"
+        :src="assetUrl(current.src)"
         alt=""
       />
     </Transition>
@@ -28,6 +28,7 @@ const props = defineProps<{
   index: number
 }>()
 
+const { assetUrl } = useAssetUrl()
 const isMobile = ref(false)
 
 onMounted(() => {
@@ -42,7 +43,7 @@ const current = computed(() => {
 })
 
 const currentSrc = computed(() => {
-  if (isMobile.value && current.value?.srcMobile) return current.value.srcMobile
-  return current.value?.src
+  const raw = (isMobile.value && current.value?.srcMobile) ? current.value.srcMobile : current.value?.src
+  return assetUrl(raw)
 })
 </script>

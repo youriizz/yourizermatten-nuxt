@@ -8,7 +8,7 @@
         v-if="current?.type === 'video'"
         :key="current.src"
         class="vb-media"
-        :src="current.src"
+        :src="assetUrl(current.src)"
         muted
         playsinline
         autoplay
@@ -21,7 +21,7 @@
         v-else-if="current?.type === 'image'"
         :key="current.src"
         class="vb-media"
-        :src="current.src"
+        :src="assetUrl(current.src)"
         alt=""
         @mouseenter="onFrameEnter"
         @mouseleave="onFrameLeave"
@@ -39,6 +39,7 @@ interface Asset {
 }
 
 const props = defineProps<{ projects: any[] }>()
+const { assetUrl } = useAssetUrl()
 const { rowHoveredSlug, frameHoveredSlug, activeSlug } = useVisualBackground()
 const { startEntering, rowPositions } = useProjectTransition()
 const router = useRouter()

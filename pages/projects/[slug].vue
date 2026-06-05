@@ -25,7 +25,7 @@
         @mouseleave="arrowHover = null"
       >
         <img
-          :src="arrowHover === 'prev' ? '/svg/arrow-left-grey.svg' : '/svg/arrow-left-white.svg'"
+          :src="assetUrl(arrowHover === 'prev' ? '/svg/arrow-left-grey.svg' : '/svg/arrow-left-white.svg')"
           alt="←" width="38" height="40"
         />
       </button>
@@ -37,7 +37,7 @@
         @mouseleave="arrowHover = null"
       >
         <img
-          :src="arrowHover === 'next' ? '/svg/arrow-right-grey.svg' : '/svg/arrow-right-white.svg'"
+          :src="assetUrl(arrowHover === 'next' ? '/svg/arrow-right-grey.svg' : '/svg/arrow-right-white.svg')"
           alt="→" width="38" height="40"
         />
       </button>
@@ -118,8 +118,8 @@
 
         <div class="project-mobile__visuals">
           <div v-for="(v, i) in mediaVisuals" :key="i" class="project-mobile__visual-frame">
-            <video v-if="v.type === 'video'" :src="v.src" muted playsinline autoplay loop class="pmv-media" />
-            <img v-else-if="v.type === 'image'" :src="v.src" alt="" class="pmv-media" />
+            <video v-if="v.type === 'video'" :src="assetUrl(v.src)" muted playsinline autoplay loop class="pmv-media" />
+            <img v-else-if="v.type === 'image'" :src="assetUrl(v.src)" alt="" class="pmv-media" />
           </div>
         </div>
 
@@ -136,6 +136,7 @@
 const route = useRoute()
 const router = useRouter()
 const isDesktop = useIsDesktop()
+const { assetUrl } = useAssetUrl()
 const { state: transState, startReturning, reset, updateOriginForSlug } = useProjectTransition()
 
 const slug = computed(() => route.params.slug as string)
