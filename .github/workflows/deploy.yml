@@ -24,8 +24,20 @@ jobs:
           node-version: 22
           cache: npm
 
+      - name: Debug — env
+        run: |
+          echo "Node: $(node -v)"
+          echo "npm: $(npm -v)"
+          echo "pwd: $(pwd)"
+          ls -la
+
       - name: Install dependencies
-        run: npm ci
+        run: npm install
+
+      - name: Debug — after install
+        run: |
+          echo "node_modules exists? $(ls node_modules | wc -l) packages"
+          echo "nuxt bin: $(./node_modules/.bin/nuxt --version 2>&1 || echo MISSING)"
 
       - name: Build
         run: npm run build
