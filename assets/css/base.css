@@ -1,0 +1,49 @@
+/* body, html, reset */
+
+/* Reset box model */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: #ff4200;
+}
+
+/* Reset margins */
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Body base */
+body {
+  padding: var(--space-4);
+  background-color: var(--color-bg-default);
+  color: var(--color-text-default);
+  font-family: var(--font-normal);
+}
+
+/* Fond noir pendant qu'une page projet est ouverte — évite tout flash blanc */
+body.project-open {
+  background-color: var(--color-black);
+}
+
+main {
+  position: absolute;
+  inset: 24px;
+  z-index: 1;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+p {
+  margin: 0 0 var(--space-0) 0;
+}
+h1{
+  all: unset;
+}

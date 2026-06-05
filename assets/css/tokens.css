@@ -1,0 +1,76 @@
+/* spacing, z-index */
+
+/* ─── Design tokens — éditer ici pour changer le look globalement ─── */
+:root {
+  --stroke: 1.5px;
+
+  /* Durations */
+  --dur-hover: 0.2s;
+  --dur-vb-fade: 0.4s;
+  --dur-page: 0.15s;
+  --dur-frame-part: 100ms;
+  --dur-topleft: 0.3s;
+
+  /* Skew */
+  --skew-contact: 6deg;       /* "youri zermatten" + contact box diagonal */
+  --skew-hover: -1.2deg;      /* projects-item au hover + meta bar projet */
+
+  /* Project page */
+  --dur-project-transition: 0.3s;  /* slide-down index→projet */
+  --dur-return-rise: 0.45s;        /* montée retour meta bar vers sa ligne */
+  --dur-return-deskew: 0.25s;      /* dé-skew final retour */
+  --ticker-speed: 100;              /* px/s — plus grand = plus rapide */
+  --project-meta-height: 44px;     /* hauteur barre meta = même que projects-link active */
+  --project-desc-height: 44px;     /* hauteur barre description ticker */
+  --project-meta-bottom: 48px;     /* distance barre meta au bas du viewport */
+  --project-desc-bottom: 132px;    /* distance ticker au bas du viewport */
+}
+
+:root {
+  --space-0: 0px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 32px;
+  --space-6: 48px;
+  --space-7: 64px;
+  --space-8: 96px;
+  --space-9: 128px;
+
+  --hero-vh: 100vh; /* fallback */
+}
+
+.frame {
+  z-index: 2;
+  pointer-events: none;
+}
+.frame > * {
+  pointer-events: auto; /* chaque nav est interactive */
+}
+
+main {
+  z-index: 1;
+}
+
+:root {
+  --frame-top-height: 10vw;
+  --frame-bottom-height: calc(48px + var(--space-4));
+  --frame-padding-y: 48px;
+  --frame-padding-x: var(--space-4);
+}
+@media (max-width: 768px) {
+  :root {
+    --frame-top-height: 77px;
+    --frame-bottom-height: 36px;
+  }
+}
+
+/* navigateurs modernes */
+@supports (height: 100svh) {
+  :root {
+    --hero-vh: 100svh;
+  }
+}
+
+

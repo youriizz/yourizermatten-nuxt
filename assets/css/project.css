@@ -1,0 +1,530 @@
+/* ──────────────────────────────────────────────────────────────
+   Transition bar (overlay index pendant le slide-down)
+   ────────────────────────────────────────────────────────────── */
+
+.project-transition-bar {
+  position: fixed;
+  left: var(--space-4);
+  right: var(--space-4);
+  z-index: 200;
+  top: var(--origin-top, 50%);
+  transform-origin: left center;
+  transition: top var(--dur-project-transition) ease;
+}
+
+.project-transition-bar.is-at-bottom {
+  /* aligne sur la position réelle de la meta bar : bottom: 48px */
+  top: calc(100vh - var(--project-meta-bottom) - var(--project-meta-height));
+}
+
+/* Même structure que projects-link/is-active — outlines NOIRS (sur fond blanc index) */
+.project-transition-bar .projects-link {
+  color: var(--color-white);
+  background-color: var(--color-black);
+  box-shadow:
+    0 calc(-1 * var(--stroke)) 0 0 var(--color-black),
+    0 var(--stroke) 0 0 var(--color-black);
+  padding-top: 8px;
+  padding-bottom: 8px;
+  transform: skewY(var(--skew-hover));
+  transition: none !important;
+  pointer-events: none;
+}
+
+/* Fade out : y, VisualBackground, autres items pendant la transition */
+.page-index.is-transitioning .visual-background,
+.page-index.is-transitioning [data-top-left] {
+  opacity: 0;
+  transition: opacity var(--dur-project-transition) ease;
+  pointer-events: none;
+}
+
+.page-index.is-transitioning .projects-list {
+  opacity: 0;
+  transition: opacity var(--dur-project-transition) ease;
+  pointer-events: none;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   Project page — fond noir total (retiré au premier frame du retour)
+   ────────────────────────────────────────────────────────────── */
+
+.page-project {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: var(--color-black); /* toujours noir — body.project-open renforce */
+}
+
+/* Pendant le retour : fond transparent pour révéler la page index */
+.page-project:not(.has-dark-bg) {
+  background: transparent;
+}
+
+/* Mobile : scrollable, fond blanc */
+@media (max-width: 768px) {
+  .page-project {
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 100svh;
+    background: var(--color-white) !important;
+  }
+}
+
+/* ── Visuals full-screen ── */
+
+.project-visuals {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 157px;
+  z-index: 0;
+  overflow: hidden;
+
+  opacity: 0;
+  transition: opacity var(--dur-project-transition) ease;
+}
+
+.project-visuals.is-content-visible {
+  opacity: 1;
+}
+
+.pv-media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.pv-fade-enter-active,
+.pv-fade-leave-active {
+  transition: opacity var(--dur-vb-fade) ease;
+}
+.pv-fade-enter-from,
+.pv-fade-leave-to {
+  opacity: 0;
+}
+
+/* ── Flèches visuels (toujours visibles, circulaires) ── */
+
+.project-arrow {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-2);
+  line-height: 0;
+
+  opacity: 0;
+  transition: opacity var(--dur-project-transition) ease;
+}
+
+.project-arrow.is-content-visible { opacity: 1; }
+.project-arrow--prev { left: var(--space-4); }
+.project-arrow--next { right: var(--space-4); }
+
+/* ── Description ticker — aligné sur la meta bar (left/right: var(--space-4)) ── */
+
+.description-ticker {
+  position: fixed;
+  left: var(--space-4);
+  right: var(--space-4);
+  bottom: 112px;
+  height: var(--project-desc-height);
+  background: var(--color-black);
+  color: var(--color-white);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--space-4);
+  z-index: 10;
+
+  /* outline top + bottom blanc comme la meta bar */
+  box-shadow:
+    0 calc(-1 * var(--stroke)) 0 0 var(--color-white),
+    0 var(--stroke) 0 0 var(--color-white);
+
+  opacity: 0;
+  transition: opacity var(--dur-project-transition) ease;
+}
+
+.description-ticker.is-ready { opacity: 1; }
+
+.description-ticker__track {
+  display: flex;
+  white-space: nowrap;
+  /* durée calculée dynamiquement par ProjectDescriptionTicker.vue */
+  animation: ticker-rtl 30s linear infinite;
+}
+
+.description-ticker__text {
+  font-family: var(--font-normal);
+  font-size: var(--fs-p1);
+  letter-spacing: var(--ls-p1);
+  line-height: var(--lh-p1);
+  padding-right: var(--space-6);
+}
+
+/* RTL : piste vers la gauche → texte entre par la droite, sort par la gauche.
+   Vide au départ : JS initialise translateX(200vw) (hors-écran droite), retire l'inline.
+   L'animation repart depuis from { 0 } → texte apparaît au bord gauche et défile.
+   Seamless loop : 2 copies, chaque cycle = -50% de la piste totale. */
+@keyframes ticker-rtl {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ──────────────────────────────────────────────────────────────
+   Meta bar — même structure que projects-link/is-active
+   Position : left/right: var(--space-4) comme la section projects-index
+   ────────────────────────────────────────────────────────────── */
+
+.project-meta-bar {
+  position: fixed;
+  left: var(--space-4);
+  right: var(--space-4);
+  bottom: 46px;
+  z-index: 10;
+}
+
+/* ── PMB inner — flex layout (remplace le grid pour la meta bar) ── */
+
+.pmb-inner {
+  display: flex !important;
+  align-items: center;
+  gap: 0;
+  padding: 4px 0;
+  overflow: hidden;
+  pointer-events: auto;
+  cursor: default;
+  /* padding animé en sync avec les nav buttons ;
+     les autres props restent instantanées (bloque le transition:all de .projects-link) */
+  transition:
+    padding          var(--dur-project-transition) ease,
+    transform        0s,
+    color            0s,
+    background-color 0s,
+    box-shadow       0s;
+}
+
+/* Padding horizontal dès que les nav buttons sont visibles */
+.pmb-inner.nav-is-visible {
+  padding: 4px 8px;
+}
+
+/* Couleurs inversées + skew */
+.project-meta-bar .pmb-inner {
+  color: var(--color-white);
+  background-color: var(--color-black);
+  box-shadow:
+    0 calc(-1 * var(--stroke)) 0 0 var(--color-white),
+    0 var(--stroke) 0 0 var(--color-white);
+  transform: skewY(var(--skew-hover));
+}
+
+/* ── Contenu centre (year · title · tags) — container query pour masquage progressif ── */
+
+.pmb-center {
+  container-type: inline-size;
+  container-name: pmb-center;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  /* Même gap que projects-link : clamp(24px, 3vw, 48px) */
+  gap: clamp(24px, 3vw, var(--space-6));
+  overflow: hidden;
+}
+
+.pmb-col {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Largeurs calquées sur les colonnes grid de projects-link */
+.pmb-year  {
+  flex-basis: clamp(90px, 8vw, 120px);
+  flex-shrink: 0;
+}
+.pmb-title { flex: 1; min-width: 0; }
+.pmb-tags  {
+  flex-basis: clamp(250px, 25vw, 370px);
+  flex-shrink: 2;
+  min-width: 0;
+  text-align: right;
+}
+
+/* Masquage progressif quand l'espace devient insuffisant */
+@container pmb-center (max-width: 260px) { .pmb-tags  { display: none; } }
+@container pmb-center (max-width: 160px) { .pmb-year  { display: none; } }
+@container pmb-center (max-width: 80px)  { .pmb-title { display: none; } }
+
+/* ── Nav prev/next (flex lateral, 5e transition) ── */
+
+.pmb-nav-btn {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0;
+  line-height: 0;
+
+  /* 5e transition : max-width 0 → visible depuis les côtés */
+  max-width: 0;
+  overflow: hidden;
+  opacity: 0;
+  color: var(--color-grey-light);
+
+  transition:
+    max-width var(--dur-project-transition) ease,
+    opacity var(--dur-project-transition) ease;
+}
+
+/* Hover : gris plus foncé */
+.pmb-nav-btn:hover { color: var(--color-grey-dark); }
+
+/* 5e transition active */
+.pmb-inner.nav-is-visible .pmb-nav-btn {
+  max-width: clamp(80px, 20vw, 210px);
+  opacity: 1;
+}
+
+.pmb-nav-btn--prev { margin-right: 0; }
+.pmb-nav-btn--next { margin-left: 0; flex-direction: row-reverse; }
+
+.pmb-nav-label {
+  font-family: var(--font-normal);
+  font-size: var(--fs-p1);
+  letter-spacing: var(--ls-p1);
+  line-height: var(--lh-p1);
+  max-width: clamp(60px, 16vw, 175px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Slides PMB lors de navigation projet→projet ── */
+
+@keyframes pmb-from-left {
+  from { transform: translateX(-130%) skewY(var(--skew-hover)); }
+  to   { transform: translateX(0)     skewY(var(--skew-hover)); }
+}
+@keyframes pmb-from-right {
+  from { transform: translateX(130%)  skewY(var(--skew-hover)); }
+  to   { transform: translateX(0)     skewY(var(--skew-hover)); }
+}
+
+.pmb-inner.slide-from-left  { animation: pmb-from-left  var(--dur-project-transition) ease both; }
+.pmb-inner.slide-from-right { animation: pmb-from-right var(--dur-project-transition) ease both; }
+
+/* ── × close — position fixe, sous la barre à droite ── */
+
+.project-close {
+  position: fixed;
+  bottom: var(--space-4);
+  right: var(--space-4);
+  z-index: 20;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-white);
+  line-height: 0;
+  padding: 0;
+
+  opacity: 0;
+  transition: opacity var(--dur-project-transition) ease;
+}
+
+.project-close.is-content-visible { opacity: 1; }
+.project-close:hover { color: var(--color-grey-light); }
+.project-close path { stroke-width: var(--stroke); }
+
+/* ──────────────────────────────────────────────────────────────
+   Retour : séquence ① disparaît → ③ monte → ② dé-skewe
+   Le fond noir est retiré dès le début (has-dark-bg supprimé au clic)
+   ────────────────────────────────────────────────────────────── */
+
+/* Phase 1 : tout disparaît */
+.page-project.is-returning .project-visuals,
+.page-project.is-returning .project-arrow,
+.page-project.is-returning .description-ticker,
+.page-project.is-returning .project-close {
+  opacity: 0 !important;
+  transition: opacity var(--dur-project-transition) ease;
+}
+
+/* Dès le retour : meta bar passe en mode "liste" (noir→blanc, outlines noirs) */
+.page-project.is-returning .project-meta-bar .pmb-inner {
+  color: var(--color-black);
+  background-color: var(--color-white);
+  box-shadow:
+    0 calc(-1 * var(--stroke)) 0 0 var(--color-black),
+    0 var(--stroke) 0 0 var(--color-black);
+}
+
+/* Phase 3 : wrapper monte via bottom */
+.project-meta-bar.is-rising {
+  transition: bottom var(--dur-return-rise) ease;
+}
+
+/* Phase 2 : bottom figé, l'inner se dé-skewe */
+.project-meta-bar.is-deskewing {
+  transition: none;
+}
+.project-meta-bar.is-deskewing .pmb-inner {
+  transform: skewY(0deg);
+  transition: transform var(--dur-return-deskew) ease !important;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   Mobile — project page
+   ────────────────────────────────────────────────────────────── */
+
+.project-mobile {
+  padding: 0;
+}
+
+/* × cross mobile en haut à droite */
+.project-mobile__cross {
+  position: fixed;
+  top: var(--space-2);
+  right: var(--space-2);
+  z-index: 20;
+  background: none;
+  border: none;
+  cursor: pointer;
+  line-height: 0;
+  padding: 0;
+  color: var(--color-black);
+}
+
+.project-mobile__cross path { stroke-width: var(--stroke); }
+
+/* ── Bloc texte accordion ── */
+
+.project-mobile__items {
+  display: flex;
+  flex-direction: column;
+  gap: 0; /* gaps différents par section — voir margin-bottom sur chaque .pmi */
+  margin-bottom: var(--space-4);
+}
+
+/*
+  Chaque .pmi est un conteneur de hauteur fixe (Figma) — le transform
+  n'affecte PAS la hauteur du flux, évitant les chevauchements.
+  Le skew est appliqué au .pmi__inner à l'intérieur.
+*/
+.pmi {
+  display: flex;
+  align-items: center;
+  overflow: visible;
+}
+
+/* Hauteurs Figma + marges inter-sections spécifiques */
+.pmi--title  { min-height: 90px;  margin-bottom: var(--space-4); }
+.pmi--desc   { min-height: auto;  padding-top: 8px; padding-bottom: 12px; margin-bottom: var(--space-7); }
+.pmi--link   { min-height: 10px;  margin-bottom: var(--space-0); margin-top: var(--space-4); }
+.pmi--meta   { min-height: 48px;  margin-bottom: var(--space-5); }
+.pmi--scroll { min-height: 111px; }
+
+/* Inner — porte le skew et la transition d'entrée */
+.pmi__inner {
+  display: block;
+  width: 100%;
+  opacity: 0;
+  transform: skewY(0deg);
+  transition:
+    opacity var(--dur-project-transition) ease,
+    transform var(--dur-project-transition) ease;
+}
+
+/* Origins par direction : +deg depuis left top, -deg depuis right top
+   → les deux descendent vers le bas (pas de remontée) */
+.pmi--title .pmi__inner  { transform-origin: left top; }   /* +12.75° → côté droit descend */
+.pmi--desc .pmi__inner   { transform-origin: right top; }  /* -12.75° → côté gauche descend */
+.pmi--link .pmi__inner   { transform-origin: left top; }   /* +12° → côté droit descend */
+.pmi--meta .pmi__inner   { transform-origin: right top; }  /* -12.75° → côté gauche descend */
+.pmi--scroll .pmi__inner { transform-origin: left top; }   /* +12.75° → côté droit descend */
+
+/* Apparition avec skew final (escalier alternant) */
+.pmi--title.is-visible  .pmi__inner { opacity: 1; transform: skewY(12.75deg); }
+.pmi--desc.is-visible   .pmi__inner { opacity: 1; transform: skewY(-12.75deg); }
+.pmi--link.is-visible   .pmi__inner { opacity: 1; transform: skewY(12deg); }
+.pmi--meta.is-visible   .pmi__inner { opacity: 1; transform: skewY(-12.75deg); }
+.pmi--scroll.is-visible .pmi__inner { opacity: 1; transform: skewY(12.75deg); }
+
+/* Titre plus grand */
+.pmi--title .pmi__inner {
+  font-size: 24px;
+  line-height: 36px;
+  letter-spacing: 0.72px;
+}
+
+/* Scroll indicator bleu + flex row */
+.pmi--scroll .pmi__inner { color: #001EFF; }
+.pmi-scroll-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.pmi--link a { text-decoration: underline; }
+
+/* ── Visuals : frames plein écran scrollables ── */
+
+.project-mobile__visuals {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.project-mobile__visual-frame {
+  height: 80svh;
+  padding: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.pmv-media {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* ── Back to top ── */
+
+.project-mobile__back {
+  height: 70svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: var(--space-2);
+  text-align: center;
+}
+
+.project-mobile__backtop {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: var(--color-blue);
+  font-family: var(--font-normal);
+  font-size: var(--fs-p1);
+  letter-spacing: var(--ls-p1);
+  line-height: var(--lh-p1);
+}

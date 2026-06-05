@@ -1,0 +1,12 @@
+Project Title : This-is-a-tentative-of-deconstruction-of-a-wordpress-website
+
+Project Description :
+This website was developed using HTML and CSS, with Vue.js integrated via a CDN. Created within a web design course focused on WordPress, the project deconstructs default WordPress navigation structures to propose an alternative, text-based interface where all interactions are embedded within a single sentence.
+
+Website Link : https://this-is-a-tentative-of-deconstruction-of-a-wordpress-website.com/
+
+Tags : Web, Interaction, Experimental
+
+Year : 2025
+
+Work / Personal : Personal

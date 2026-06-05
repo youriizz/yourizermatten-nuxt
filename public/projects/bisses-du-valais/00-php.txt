@@ -1,0 +1,12 @@
+Project Title : Bisses du Valais
+
+Project Description :
+This project explores a contemporary redesign of the Bisses du Valais website through a Figma-based prototype. I developed a navigation concept based on fluid lines running across the interface, inspired by water flow and combined with an interactive map and a dedicated museum section. These lines structure scrolling, orientation, and access to territorial information throughout the site.
+
+Website Link : https://www.figma.com/proto/hyVmAF89QOAlMBzKEUHIOV/2025-11-12-Navigation-Pixel-Perfect-Presentation-Youri-Zermatten?page-id=0%3A1&node-id=164-2854&p=f&viewport=284%2C379%2C0.02&t=mX0sikQHNLyCTvqC-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=164%3A2854
+
+Tags : Prototype, Mapping
+
+Year : 2025
+
+Work / Personal : Work

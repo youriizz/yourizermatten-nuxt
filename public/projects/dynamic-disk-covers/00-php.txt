@@ -1,0 +1,10 @@
+Project Title : Dynamic Disk Covers
+
+Project Description :
+Developed during a workshop at ECAL with Antonin Waterkyn, this project explores dynamic album cover systems using Cavalry. Starting from the physical form and rotational logic of 33-rpm vinyl records, I translated these characteristics into a digital, generative visual language. The goal was to reinterpret traditional album covers as adaptable motion-based assets, designed to fit contemporary platforms such as Spotify backgrounds and animated stories.
+
+Tags : Motion, Generative
+
+Year : 2025
+
+Work / Personal : Personal

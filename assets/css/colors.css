@@ -1,0 +1,18 @@
+:root {
+  --color-black: #000000;
+  --color-white: #ffffff;
+
+  --color-grey-dark: #666666;
+  --color-grey-light: #adadad;
+
+  /* sémantique UI */
+  --color-text-default: var(--color-grey-dark);
+  --color-text-hover: var(--color-black);
+  --color-bg-default: var(--color-white);
+
+  /* exception hover */
+  --color-text-hover-inverse: var(--color-white);
+
+  /* accent */
+  --color-blue: #0000ff;
+}

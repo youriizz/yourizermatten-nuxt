@@ -1,0 +1,1 @@
+The website features two homepages: A classic homepage with vertical scrolling, and an alternative homepage that activates when clicking “change views.” In this mode, the elements reposition themselves, and navigation functions like an online map.

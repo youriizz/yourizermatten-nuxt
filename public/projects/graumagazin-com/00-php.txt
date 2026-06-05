@@ -1,0 +1,14 @@
+Project Title : graumagazin.com
+
+Project Description :
+GRAUmagazin is a Berlin-based art magazine. I designed and developed its website using Kirby CMS (HTML, CSS, JS, PHP, YAML), focusing on a clear editorial structure and a flexible publishing system. The main challenge was to balance a strong visual identity with usability — rethinking standard UI patterns to support long-form content, categorization, and evolving editorial needs while keeping the interface intuitive and lightweight.
+
+Project Website Link : https://www.graumagazin.com/
+
+Tags : Web, Editorial, CMS
+
+Year : 2024
+
+Work / Personal : Work
+
+Collaborators : Grau Magazin – Julius Führ and Leif Asmus

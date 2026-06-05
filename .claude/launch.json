@@ -1,0 +1,41 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "nuxt-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--", "--host", "0.0.0.0"],
+      "port": 3000
+    },
+    {
+      "name": "kirby-v1",
+      "runtimeExecutable": "php",
+      "runtimeArgs": ["-S", "0.0.0.0:3001", "-t", "/Users/yourizermatten/Desktop/ARCHIVE/WEB/yourizermatten.ch/kirby-test-v1"],
+      "port": 3001
+    },
+    {
+      "name": "kirby-v2",
+      "runtimeExecutable": "php",
+      "runtimeArgs": ["-S", "0.0.0.0:3002", "-t", "/Users/yourizermatten/Desktop/ARCHIVE/WEB/yourizermatten.ch/kirby-test-v2"],
+      "port": 3002
+    },
+    {
+      "name": "nuxt-v1",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "/Users/yourizermatten/Desktop/ARCHIVE/WEB/yourizermatten.ch/v1-youri-zermatten-ch-nuxt", "run", "dev", "--", "--port", "3003", "--host", "0.0.0.0"],
+      "port": 3003
+    },
+    {
+      "name": "nuxt-v2",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "/Users/yourizermatten/Desktop/ARCHIVE/WEB/yourizermatten.ch/v2-youri-zermatten-ch-nuxt", "run", "dev", "--", "--port", "3004", "--host", "0.0.0.0"],
+      "port": 3004
+    },
+    {
+      "name": "nuxt-v3",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "/Users/yourizermatten/Desktop/ARCHIVE/WEB/yourizermatten.ch/yourizermatten-nuxt-v3", "run", "dev", "--", "--port", "3005", "--host", "0.0.0.0"],
+      "port": 3005
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+/* frame, grid, positions */
+
+.frame {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+}
+
+.frame > * {
+  pointer-events: auto;
+}
+
+.top-left {
+  position: absolute;
+  top: var(--space-4);
+  left: var(--space-4);
+}
+
+.top-right {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+}
+
+.bottom-right {
+  position: absolute;
+  bottom: var(--space-4);
+  right: var(--space-4);
+}
+
+.bottom-left {
+  position: absolute;
+  bottom: var(--space-4);
+  left: var(--space-4);
+}
+
+/* [data-top-left] override dans swup.css (position:fixed top:0 left:0) prend le dessus */
+
+/* états du frame */
+[data-frame-part].is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 100ms ease;
+}
+
+[data-frame-part].is-invisible {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 100ms ease;
+}
+
+
+[data-frame-part].is-hidden-on-scroll {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 120ms ease;
+}

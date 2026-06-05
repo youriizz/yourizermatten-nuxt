@@ -1,0 +1,93 @@
+.is-clickable {
+  cursor: pointer;
+}
+
+.is-clickable:hover,
+.is-clickable.is-hover {
+  color: var(--color-text-hover);
+}
+
+/* --------------------------------------------------
+   Contact/Bio – desktop
+-------------------------------------------------- */
+
+.contact-text-block {
+  position: absolute;
+  right: 25vw;
+  bottom: 15vw;
+  padding: var(--space-4);
+  border: none;
+  border-top: var(--stroke) solid var(--color-grey-dark);
+  border-bottom: var(--stroke) solid var(--color-grey-dark);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-width: min(600px, 40vw);
+  transform-origin: bottom right;
+
+  opacity: 0;
+  transform: skewY(0deg);
+  transition: opacity var(--dur-topleft) ease-in-out, transform var(--dur-topleft) ease-in-out;
+}
+
+.contact-text-block.is-visible {
+  opacity: 1;
+  transform: skewY(calc(-1 * var(--skew-contact)));
+}
+
+.contact-bio {
+  margin: 0;
+}
+
+.contact-links {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-links a {
+  display: block;
+}
+
+/* --------------------------------------------------
+   Contact/Bio – mobile
+-------------------------------------------------- */
+
+@media (max-width: 768px) {
+  .page-contact {
+    padding-top: 165px;
+  }
+
+  .contact-text-block {
+    position: static;
+    border: none;
+    padding: 0;
+    gap: 64px;
+    max-width: 100%;
+    transform: skewY(0deg);
+  }
+
+  .contact-text-block.is-visible {
+    opacity: 1;
+    transform: skewY(0deg);
+  }
+
+  .contact-bio {
+    transform: skewY(var(--skew-contact));
+    transform-origin: top left;
+  }
+
+  .contact-links {
+    transform: skewY(calc(-1 * var(--skew-contact)));
+    transform-origin: top left;
+  }
+}
+
+/* --------------------------------------------------
+   Projects index positioning
+-------------------------------------------------- */
+
+.projects-index__inner {
+  position: relative;
+  top: 60%;
+  transform: translateY(-50%);
+}

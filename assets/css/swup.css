@@ -1,0 +1,162 @@
+/* --------------------------------------------------
+   Page transitions
+-------------------------------------------------- */
+
+.page-enter-active,
+.page-leave-active {
+  transition: opacity var(--dur-page) ease;
+}
+
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+}
+
+/* --------------------------------------------------
+   Frame – états globaux
+-------------------------------------------------- */
+
+[data-frame-part].is-visible { opacity: 1; pointer-events: auto; transition: opacity var(--dur-frame-part) ease; }
+[data-frame-part].is-invisible { opacity: 0; pointer-events: none; transition: opacity var(--dur-frame-part) ease; }
+
+/* --------------------------------------------------
+   Top-left – position & animation
+-------------------------------------------------- */
+
+[data-top-left] {
+  position: fixed;
+  display: block;
+  transform: translateY(0);
+  transform-origin: 0 0;
+  transition: transform var(--dur-topleft) ease-in-out;
+}
+
+[data-top-left].is-contact {
+  transform: translateY(2vw) skewY(var(--skew-contact));
+}
+
+@media (max-width: 768px) {
+  [data-top-left] {
+    display: block;
+    transition: none;
+  }
+  [data-top-left].is-contact {
+    transform: translateY(0);
+    transition: none;
+  }
+
+  .top-left__zermatten {
+    display: block;
+    margin-top: 18px;
+  }
+}
+
+@media (min-width: 769px) {
+  .top-left__zermatten {
+    display: inline;
+  }
+}
+
+/* --------------------------------------------------
+   Top-left – texte
+-------------------------------------------------- */
+
+.top-left__rest {
+  transform: translateX(-0.035em);
+  pointer-events: none;
+}
+
+[data-top-left].is-contact .top-left__rest {
+  pointer-events: auto;
+}
+
+/* Vue Transition: top-left-rest */
+.top-left-rest-enter-from {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+}
+.top-left-rest-enter-active {
+  transition: opacity var(--dur-topleft) ease-in-out, max-height var(--dur-topleft) ease-in-out;
+  overflow: hidden;
+}
+.top-left-rest-enter-to {
+  opacity: 1;
+  max-height: 400px;
+}
+.top-left-rest-leave-from {
+  opacity: 1;
+  max-height: 400px;
+}
+.top-left-rest-leave-active {
+  transition: opacity 0.2s ease-in-out;
+}
+.top-left-rest-leave-to {
+  opacity: 0;
+}
+
+@media (max-width: 768px) {
+  .top-left-rest-enter-from {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+  }
+  .top-left-rest-enter-active {
+    transition: opacity var(--dur-topleft) ease-in-out, max-height var(--dur-topleft) ease-in-out;
+    overflow: hidden;
+  }
+  .top-left-rest-enter-to {
+    opacity: 1;
+    max-height: 120px;
+  }
+  .top-left-rest-leave-from {
+    opacity: 1;
+    max-height: 120px;
+  }
+  .top-left-rest-leave-active {
+    transition: opacity var(--dur-topleft) ease-in-out, max-height var(--dur-topleft) ease-in-out;
+    overflow: hidden;
+  }
+  .top-left-rest-leave-to {
+    opacity: 0;
+    max-height: 0;
+  }
+}
+
+/* --------------------------------------------------
+   Hover
+-------------------------------------------------- */
+
+.top-left__y:hover { color: var(--color-text-hover); }
+[data-top-left].is-contact:hover { color: var(--color-text-hover); }
+
+/* --------------------------------------------------
+   Bottom-right close (SVG cross)
+-------------------------------------------------- */
+
+.bottom-right-close {
+  display: block;
+  line-height: 0;
+  color: var(--color-grey-dark);
+}
+
+.bottom-right-close:hover {
+  color: var(--color-black);
+}
+
+/* stroke controlé via la variable globale */
+.bottom-right-close path {
+  stroke-width: var(--stroke);
+}
+
+.cross-icon--mobile { display: none; }
+.cross-icon--desktop { display: block; }
+
+@media (max-width: 768px) {
+  .bottom-right-close {
+    bottom: auto;
+    top: var(--space-4);
+  }
+  .cross-icon--desktop { display: none; }
+  .cross-icon--mobile { display: block; }
+}

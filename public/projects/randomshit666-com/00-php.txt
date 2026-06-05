@@ -1,0 +1,12 @@
+Project Title : randomshit666.com
+
+Project Description :
+Randomshit666.com is my first large-scale website project, developed using HTML, CSS, Vue.js, and p5.js. The site brings together twenty-four distinct interactive experiences designed as autonomous modules, each challenging conventional patterns of web navigation and interaction.
+
+Website Link : https://www.randomshit666.com
+
+Tags : Web, Interaction, Experimental
+
+Year : 2023
+
+Work / Personal : Personal
